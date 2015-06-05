@@ -1,0 +1,22 @@
+{
+  "name": "npm-outdated-slack",
+  "version": "0.1.0",
+  "description": "Sends information about your outdated modules to a slack channel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": [
+    "slack",
+    "npm"
+  ],
+  "dependencies": {
+    "lodash": "^3.9.1",
+    "minimist": "^1.1.1",
+    "node-slackr": "^0.1.0",
+    "npm": "^2.10.0",
+    "semver": "^4.3.4"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "node": true,
+  "curly": true,
+  "forin": true,
+  "maxlen": 140,
+  "mocha": true,
+  "strict": true,
+  "unused": true
+}

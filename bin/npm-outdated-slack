@@ -1,0 +1,41 @@
+#!/usr/bin/env node
+'use strict';
+var report = require('../');
+
+
+function run() {
+  var options = require('minimist')(process.argv.slice(2));
+  if (options.ignoredModules) {
+    options.ignoredModules = options.ignoredModules.split(',');
+  }
+  if (!options.webhook) {
+    options.webhook = process.env.NPM_OUTDATED_SLACK_WEBHOOK;
+  }
+
+  if (!options.project) {
+    console.error('No project specified. Please specify it with --project');
+    process.exit(-1);
+  }
+
+  if (!options.webhook) {
+    console.error('No Slack webhook specified. Please specify it with --webhook');
+    process.exit(-1);
+  }
+
+  if (!options.channel) {
+    console.error('No Slack Channel specified. Please specify it with --channel');
+    process.exit(-1);
+  }
+
+  report(options, function(err) {
+    if (err) {
+      console.error('Failed sending info');
+      console.error(err);
+      process.exit(-1);
+    }
+
+    process.exit(0);
+  });
+}
+
+run();
