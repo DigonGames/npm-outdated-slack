@@ -1,6 +1,6 @@
 {
   "name": "npm-outdated-slack",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Sends information about your outdated modules to a slack channel",
   "main": "index.js",
   "scripts": {

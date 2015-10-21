@@ -23,23 +23,28 @@ var DEFAULT_OPTIONS = {
 function convertOutdatedList(list, options) {
   var out = {};
   list.forEach(function(p) {
-    var ignoredModule = _.contains(options.ignoredModules, p[1]);
-    var shouldIgnorePreRelease = options.ignorePreReleases && semver.parse(p[4]).prerelease.length !== 0;
+    try {
+      var ignoredModule = _.contains(options.ignoredModules, p[1]);
+      var shouldIgnorePreRelease = options.ignorePreReleases && semver.parse(p[4]).prerelease.length !== 0;
 
-    if (!shouldIgnorePreRelease && !ignoredModule) {
-      var currentVersion = p[2];
-      var wantedVersion = p[3];
-      var latestVersion = p[4];
-      var severity = 'patch';
-      if (semver.major(latestVersion) > semver.major(currentVersion)) {
-        severity = 'major';
-      } else if (semver.minor(latestVersion) > semver.minor(currentVersion)) {
-        severity = 'minor';
+      if (!shouldIgnorePreRelease && !ignoredModule) {
+        var currentVersion = p[2];
+        var wantedVersion = p[3];
+        var latestVersion = p[4];
+        var severity = 'patch';
+        if (semver.major(latestVersion) > semver.major(currentVersion)) {
+          severity = 'major';
+        } else if (semver.minor(latestVersion) > semver.minor(currentVersion)) {
+          severity = 'minor';
+        }
+
+        out[p[1]] = {
+          current: currentVersion, wanted: wantedVersion, latest: latestVersion, severity: severity
+        };
       }
-
-      out[p[1]] = {
-        current: currentVersion, wanted: wantedVersion, latest: latestVersion, severity: severity
-      };
+    } catch (err) {
+      console.error('Caught error when processing ', p);
+      throw err;
     }
   });
   return out;
